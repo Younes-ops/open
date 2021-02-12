@@ -85,17 +85,21 @@ void stacks_par_critical(stack_t *stacks, int n){
 
   int s;
   
-  
-  for(;;){
+  #pragma omp parallel
+  {
+    for(;;){
 
-    /* Get the stack number s */
-    s = get_random_stack();
+      /* Get the stack number s */
+      s = get_random_stack();
 
-    if(s==-1) break;
-    
-    /* Push some value on stack s */
-    stacks[s].elems[stacks[s].cnt++] = process();
+      if(s==-1) break;
 
+      #pragma omp critical
+      {
+      /* Push some value on stack s */
+      stacks[s].elems[stacks[s].cnt++] = process();
+      }
+    }
   }
 }
 
