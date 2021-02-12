@@ -120,11 +120,12 @@ void stacks_par_atomic(stack_t *stacks, int n){
         if(s==-1) break;
         temp = process();
 
-        #pragma omp atomic 
-        {
+       
+
         /* Push some value on stack s */
+         #pragma omp atomic 
         stacks[s].elems[stacks[s].cnt++] = temp;
-        }
+        
       }
   }
 }
