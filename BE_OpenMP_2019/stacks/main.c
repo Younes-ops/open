@@ -118,13 +118,13 @@ void stacks_par_atomic(stack_t *stacks, int n){
         s = get_random_stack();
 
         if(s==-1) break;
-        temp = process();
+        #pragma omp atomic
+        temp = stacks[s].cnt++ ;
 
        
 
         /* Push some value on stack s */
-         #pragma omp atomic 
-        stacks[s].elems[stacks[s].cnt++] = temp;
+        stacks[s].elems[temp] = process();
         
       }
   }
