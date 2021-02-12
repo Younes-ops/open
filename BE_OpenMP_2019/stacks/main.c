@@ -137,7 +137,7 @@ void stacks_par_locks(stack_t *stacks, int n){
   int s, temp;
   omp_lock_t *locks;
   
-  locks = (omp_lock_t*)malloc(1000*sizeof(omp_lock_t)),
+  locks = (omp_lock_t*)malloc(1000*sizeof(omp_lock_t));
   
   /* omp_init_lock(&lock) */
   for ( int i=0 ; i < 1000 ; i++ ) {
