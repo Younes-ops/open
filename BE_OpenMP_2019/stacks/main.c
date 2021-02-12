@@ -83,7 +83,7 @@ void stacks_seq(stack_t *stacks, int n){
 
 void stacks_par_critical(stack_t *stacks, int n){
 
-  int s;
+  int s , temp;
   
   #pragma omp parallel private(s)
   {
@@ -93,11 +93,11 @@ void stacks_par_critical(stack_t *stacks, int n){
       s = get_random_stack();
 
       if(s==-1) break;
-
+      temp = process();
       #pragma omp critical
       {
       /* Push some value on stack s */
-      stacks[s].elems[stacks[s].cnt++] = process();
+      stacks[s].elems[stacks[s].cnt++] = temp;
       }
     }
   }
