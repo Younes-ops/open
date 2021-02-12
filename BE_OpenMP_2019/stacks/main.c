@@ -134,8 +134,15 @@ void stacks_par_atomic(stack_t *stacks, int n){
 
 void stacks_par_locks(stack_t *stacks, int n){
 
-  int s;
+  int s, temp;
+  omp_lock_t *locks;
   
+  locks = (omp_lock_t*)malloc(1000*sizeof(omp_lock_t)),
+  
+  /* omp_init_lock(&lock) */
+  for ( int i=0 ; i < 1000 ; i++ ) {
+    omp_init_lock(locks+i);
+  }  
   
   for(;;){
 
@@ -143,11 +150,16 @@ void stacks_par_locks(stack_t *stacks, int n){
     s = get_random_stack();
 
     if(s==-1) break;
-    
+    temp = process();
     /* Push some value on stack s */
-    stacks[s].elems[stacks[s].cnt++] = process();
+    omp_set_lock(locks+s);
+    stacks[s].elems[stacks[s].cnt++] =temp;
+    omp_unset_lock(locks+s);
 
   }
- 
+  /* omp_destroy_lock(&lock) */
+ for ( int i=0 ; i < 1000 ; i++ ) {
+    omp_destroy_lock(locks+i);
+  }  
 
 }
