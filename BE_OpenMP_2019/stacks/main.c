@@ -85,7 +85,7 @@ void stacks_par_critical(stack_t *stacks, int n){
 
   int s , temp;
   
-  #pragma omp parallel private(s)
+  #pragma omp parallel private(s,temp)
   {
     for(;;){
 
