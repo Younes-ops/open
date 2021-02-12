@@ -118,7 +118,7 @@ void stacks_par_atomic(stack_t *stacks, int n){
         s = get_random_stack();
 
         if(s==-1) break;
-        #pragma omp atomic
+        #pragma omp atomic capture
         temp = stacks[s].cnt++ ;
 
        
