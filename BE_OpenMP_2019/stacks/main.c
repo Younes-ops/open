@@ -108,7 +108,7 @@ void stacks_par_critical(stack_t *stacks, int n){
 
 void stacks_par_atomic(stack_t *stacks, int n){
 
-  int s;
+  int s, temp;
   
   #pragma omp parallel private(s,temp)
   {
@@ -123,7 +123,7 @@ void stacks_par_atomic(stack_t *stacks, int n){
         #pragma omp atomic {
         /* Push some value on stack s */
         stacks[s].elems[stacks[s].cnt++] =temp;
-      }
+        }
       }
   }
 }
